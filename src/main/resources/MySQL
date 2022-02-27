@@ -1,0 +1,118 @@
+create table course (
+       id binary(255) not null,
+        name varchar(255) not null,
+        faculty_id binary(255) not null,
+        primary key (id)
+    ) ;
+
+    create table faculty (
+       id binary(255) not null,
+        faculty_name varchar(255) not null,
+        primary key (id)
+    ) ;
+
+    create table grade (
+       id binary(255) not null,
+        grade decimal(19,2),
+        course_id binary(255),
+        professor_id binary(255),
+        student_id binary(255) not null,
+        primary key (id)
+    ) ;
+
+    create table professor (
+       id binary(255) not null,
+        email varchar(255),
+        first_name varchar(255) not null,
+        last_name varchar(255) not null,
+        password varchar(255) not null,
+        picture_id varchar(255),
+        faculty_id binary(255) not null,
+        primary key (id)
+    ) ;
+
+    create table student (
+       id binary(255) not null,
+        email varchar(255),
+        first_name varchar(255) not null,
+        groop varchar(255),
+        last_name varchar(255) not null,
+        password varchar(255) not null,
+        start_date date not null,
+        faculty_id binary(255) not null,
+        primary key (id)
+    ) ;
+
+    alter table course
+       drop index UK_4xqvdpkafb91tt3hsb67ga3fj;
+
+    alter table course
+       add constraint UK_4xqvdpkafb91tt3hsb67ga3fj unique (name);
+
+    alter table faculty
+       drop index UK_upe165u0mvm2kjsx49p1jp7w;
+
+    alter table faculty
+       add constraint UK_upe165u0mvm2kjsx49p1jp7w unique (faculty_name);
+
+    alter table professor
+       drop index UK_qjm28ojevoom770jyieljec3e;
+
+    alter table professor
+       add constraint UK_qjm28ojevoom770jyieljec3e unique (email);
+
+    alter table professor
+       drop index UK_ilwqx7s68l9euvnclv3vfxyo1;
+
+    alter table professor
+       add constraint UK_ilwqx7s68l9euvnclv3vfxyo1 unique (first_name);
+
+    alter table professor
+       drop index UK_7pmref26q2v9tsfa6sapv2eno;
+
+    alter table professor
+       add constraint UK_7pmref26q2v9tsfa6sapv2eno unique (last_name);
+
+    alter table professor
+       drop index UK_nom4a2sbniu0k27xomys8ji7m;
+
+    alter table professor
+       add constraint UK_nom4a2sbniu0k27xomys8ji7m unique (picture_id);
+
+    alter table student
+       drop index UK_fe0i52si7ybu0wjedj6motiim;
+
+    alter table student
+       add constraint UK_fe0i52si7ybu0wjedj6motiim unique (email);
+
+    alter table course
+       add constraint FKgre2fpr1ld8i5d30y1x3frxsd
+       foreign key (faculty_id)
+       references faculty (id)
+       on delete cascade;
+
+    alter table grade
+       add constraint FK7e8ca7hfmrpruicqhocskjlf2
+       foreign key (course_id)
+       references course (id);
+
+    alter table grade
+       add constraint FKr7njm9cr6yd2ay3x1ohfex3m3
+       foreign key (professor_id)
+       references professor (id);
+
+    alter table grade
+       add constraint FK5secqnjjwgh9wxk4h1xwgj1n0
+       foreign key (student_id)
+       references student (id);
+
+    alter table professor
+       add constraint FKd1eougli9k1sdoq78cme3rnjg
+       foreign key (faculty_id)
+       references faculty (id)
+       on delete cascade;
+
+    alter table student
+       add constraint FK6geq7tnjed7u4hvgv1ac6lyh
+       foreign key (faculty_id)
+       references faculty (id);

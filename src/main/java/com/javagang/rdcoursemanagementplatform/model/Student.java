@@ -1,16 +1,14 @@
 package com.javagang.rdcoursemanagementplatform.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "student")
 public class Student {
@@ -44,13 +42,49 @@ public class Student {
   @Column(name = "start_date", nullable = false)
   private LocalDate startDate;
 
-  @Column(name = "student_group", nullable = false, length = 100)
-  private String group;
-
   //  @ManyToMany(cascade = {CascadeType.ALL})
   //  @JoinTable(
   //      name = "Student_Courses",
   //      joinColumns = {@JoinColumn(name = "student_id")},
   //      inverseJoinColumns = {@JoinColumn(name = "course_id")})
   //  private Set<Course> courses = new HashSet<>();
+
+  public Student() {}
+
+  public Student(
+      String mail,
+      String password,
+      String firstName,
+      String lastName,
+      String pictureId,
+      LocalDate birthYear,
+      LocalDate startDate) {
+    this.mail = mail;
+    this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.pictureId = pictureId;
+    this.birthYear = birthYear;
+    this.startDate = startDate;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+        "Student{id=%s, mail='%s', firstName='%s', lastName='%s', pictureId='%s', birthYear=%s, startDate=%s}",
+        id, mail, firstName, lastName, pictureId, birthYear, startDate);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Student student = (Student) o;
+    return id.equals(student.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return id.hashCode();
+  }
 }

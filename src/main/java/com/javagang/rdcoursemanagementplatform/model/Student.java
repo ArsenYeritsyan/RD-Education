@@ -74,17 +74,4 @@ public class Student {
         "Student{id=%s, mail='%s', firstName='%s', lastName='%s', pictureId='%s', birthYear=%s, startDate=%s}",
         id, mail, firstName, lastName, pictureId, birthYear, startDate);
   }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Student student = (Student) o;
-    return id.equals(student.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return id.hashCode();
-  }
 }

@@ -47,6 +47,8 @@ public abstract class User {
   @Column(name = "picture_id")
   private String pictureId;
 
+  public User() {}
+
   public User(
       String password,
       String mail,

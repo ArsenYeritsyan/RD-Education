@@ -21,6 +21,8 @@ public class Professor extends User {
   @Column(name = "is_verified", nullable = false, columnDefinition = "tinyint(1) default false")
   private boolean isVerified;
 
+  public Professor() {}
+
   public Professor(
       String password,
       String mail,

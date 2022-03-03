@@ -29,6 +29,8 @@ public class Student extends User {
   //      inverseJoinColumns = {@JoinColumn(name = "course_id")})
   //  private Set<Course> courses = new HashSet<>();
 
+  public Student() {}
+
   public Student(
       String password,
       String mail,

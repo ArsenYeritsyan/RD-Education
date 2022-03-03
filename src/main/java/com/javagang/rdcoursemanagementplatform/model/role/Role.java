@@ -15,17 +15,18 @@ public class Role {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(name = "name")
-  private String name;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "role_type", nullable = false, length = 9)
+  private RoleType roleType;
 
   public Role() {}
 
-  public Role(String name) {
-    this.name = name;
+  public Role(RoleType roleType) {
+    this.roleType = roleType;
   }
 
   @Override
   public String toString() {
-    return "Role{" + "id=" + id + ", name='" + name + '\'' + '}';
+    return "Role{" + "id=" + id + ", roleType=" + roleType + '}';
   }
 }

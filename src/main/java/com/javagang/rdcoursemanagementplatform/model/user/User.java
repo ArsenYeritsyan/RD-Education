@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "user")
-public abstract class User {
+public class User {
   @Id
   @GeneratedValue
   @Column(name = "id", updatable = false, unique = true, nullable = false)

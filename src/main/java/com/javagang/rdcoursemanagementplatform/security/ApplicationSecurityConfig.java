@@ -17,11 +17,15 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+                .csrf()
                 .and()
-                .formLogin();
+                .cors()
+                .disable()
+                .authorizeRequests()
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .anyRequest()
+                .authenticated();
+
     }
 
 }

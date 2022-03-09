@@ -1,12 +1,11 @@
 package com.javagang.rdcoursemanagementplatform.controller;
 
+import com.javagang.rdcoursemanagementplatform.model.dto.RegisterFormDTO;
 import com.javagang.rdcoursemanagementplatform.model.entity.JwtRequest;
 import com.javagang.rdcoursemanagementplatform.model.entity.JwtResponse;
 import com.javagang.rdcoursemanagementplatform.security.JwtTokenUtil;
 import com.javagang.rdcoursemanagementplatform.security.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -45,6 +44,11 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<?> saveUser(@RequestBody RegisterFormDTO registerForm) throws Exception {
+        return ResponseEntity.ok(userDetailsService.save(registerForm));
+    }
+
     private void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -55,3 +59,4 @@ public class JwtAuthenticationController {
         }
     }
 }
+

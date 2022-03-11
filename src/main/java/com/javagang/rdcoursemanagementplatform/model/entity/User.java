@@ -64,4 +64,8 @@ public class User {
         this.dob = dob;
         this.pictureId = pictureId;
     }
+
+    public String getMail() {
+        return mail;
+    }
 }

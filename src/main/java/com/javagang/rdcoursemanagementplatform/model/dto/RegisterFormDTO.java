@@ -7,7 +7,6 @@ import java.time.LocalDate;
 @Data
 public class RegisterFormDTO {
     private String password;
-    private String username;
     private String mail;
     private String firstName;
     private String lastName;

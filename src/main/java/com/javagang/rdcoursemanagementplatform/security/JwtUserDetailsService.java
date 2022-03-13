@@ -1,6 +1,7 @@
 package com.javagang.rdcoursemanagementplatform.security;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import com.javagang.rdcoursemanagementplatform.model.dto.RegisterFormDTO;
 import com.javagang.rdcoursemanagementplatform.model.entity.User;
@@ -23,7 +24,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     public User save(RegisterFormDTO registerForm) {
         User newUser = new User();
-        newUser.setUsername(registerForm.getUsername());
         newUser.setPassword(bcryptEncoder.encode(registerForm.getPassword()));
         newUser.setDob(registerForm.getDob());
         newUser.setFirstName(registerForm.getFirstName());
@@ -34,12 +34,13 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+        Optional<User> optionalUser = userRepository.findBymail(mail);
+        User user = optionalUser.get();
         if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
+            throw new UsernameNotFoundException("User not found with username: " + mail);
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+        return new org.springframework.security.core.userdetails.User(user.getMail(), user.getPassword(),
                 new ArrayList<>());
     }
 }

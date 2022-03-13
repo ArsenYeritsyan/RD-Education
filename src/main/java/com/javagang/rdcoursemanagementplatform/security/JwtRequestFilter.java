@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javagang.rdcoursemanagementplatform.constant.Constants;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -42,7 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 
         if (requestTokenHeader != null && requestTokenHeader.startsWith(Constants.BEARER)) {
-            jwtToken = requestTokenHeader.substring(Constants.BEGIN_INDEX0);
+            jwtToken = requestTokenHeader.substring(Constants.BEGIN_INDEX);
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {

@@ -2,11 +2,13 @@ package com.javagang.rdcoursemanagementplatform.security;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.javagang.rdcoursemanagementplatform.model.dto.RegisterFormDTO;
 import com.javagang.rdcoursemanagementplatform.model.entity.User;
 import com.javagang.rdcoursemanagementplatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +24,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
+//    TODO must be changed to return UserDTO instead of User
     public User save(RegisterFormDTO registerForm) {
         User newUser = new User();
         newUser.setPassword(bcryptEncoder.encode(registerForm.getPassword()));
@@ -35,12 +38,12 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userRepository.findBymail(mail);
-        User user = optionalUser.get();
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + mail);
-        }
+        var user = userRepository.findBymail(mail)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + mail));
+
         return new org.springframework.security.core.userdetails.User(user.getMail(), user.getPassword(),
-                new ArrayList<>());
+                user.getRoles().stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getRoleType().toString()))
+                        .collect(Collectors.toList()));
     }
 }

@@ -11,26 +11,22 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "professor")
 public class Professor extends User {
+  @ManyToOne
+  @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+  private Faculty faculty;
 
-    @ManyToOne
-    @JoinColumn(name = "faculty_id", nullable = false)
-    private Faculty faculty;
+  @Column(name = "is_verified", columnDefinition = "tinyint(1) default false")
+  private boolean isVerified;
 
-    @Column(name = "is_verified", nullable = false, columnDefinition = "tinyint(1) default false")
-    private boolean isVerified;
+  public Professor() {}
 
-    public Professor() {
-    }
-
-    public Professor(
-            String password,
-            String mail,
-            String firstName,
-            String lastName,
-            LocalDate dob,
-            String pictureId) {
-        super(password, mail, firstName, lastName, dob, pictureId);
-    }
-
-
+  public Professor(
+      String password,
+      String mail,
+      String firstName,
+      String lastName,
+      LocalDate dob,
+      String pictureId) {
+    super(password, mail, firstName, lastName, dob, pictureId);
+  }
 }

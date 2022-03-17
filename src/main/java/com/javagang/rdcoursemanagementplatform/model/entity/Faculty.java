@@ -2,6 +2,7 @@ package com.javagang.rdcoursemanagementplatform.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "faculty")
 public class Faculty {
@@ -31,8 +33,6 @@ public class Faculty {
 
   @OneToMany(mappedBy = "faculty")
   private Set<Course> courses = new HashSet<>();
-
-  public Faculty() {}
 
   public Faculty(String facultyName) {
     this.facultyName = facultyName;

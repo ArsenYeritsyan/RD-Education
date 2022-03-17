@@ -2,12 +2,14 @@ package com.javagang.rdcoursemanagementplatform.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "professor")
 public class Professor extends User {
@@ -17,8 +19,6 @@ public class Professor extends User {
 
   @Column(name = "is_verified", columnDefinition = "tinyint(1) default false")
   private boolean isVerified;
-
-  public Professor() {}
 
   public Professor(
       String password,

@@ -2,6 +2,7 @@ package com.javagang.rdcoursemanagementplatform.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "user")
@@ -52,8 +54,6 @@ public class User {
 
   @Column(name = "picture_id")
   private String pictureId;
-
-  public User() {}
 
   public User(
       String password,

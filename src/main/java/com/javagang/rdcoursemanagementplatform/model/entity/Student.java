@@ -2,6 +2,7 @@ package com.javagang.rdcoursemanagementplatform.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "student")
 public class Student extends User {
@@ -31,8 +33,6 @@ public class Student extends User {
 
   @OneToMany(mappedBy = "student")
   private Set<Homework> homeworks;
-
-  public Student() {}
 
   public Student(
       String password,

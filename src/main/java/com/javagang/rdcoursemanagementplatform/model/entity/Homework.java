@@ -2,6 +2,7 @@ package com.javagang.rdcoursemanagementplatform.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.GenericGenerator;
 import com.javagang.rdcoursemanagementplatform.model.enums.HomeworkState;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "homework")
 public class Homework {
@@ -37,8 +39,6 @@ public class Homework {
   @OneToOne
   @JoinColumn(name = "grade_id")
   private Grade grade;
-
-  public Homework() {}
 
   public Homework(Student student) {
     this.student = student;

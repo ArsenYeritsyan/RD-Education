@@ -50,11 +50,12 @@ public class Course {
     return Objects.equals(id, course.id)
         && Objects.equals(name, course.name)
         && Objects.equals(faculty, course.faculty)
+        && Objects.equals(homeworks, course.homeworks)
         && Objects.equals(students, course.students);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, faculty, students);
+    return Objects.hash(id, name, faculty, homeworks, students);
   }
 }

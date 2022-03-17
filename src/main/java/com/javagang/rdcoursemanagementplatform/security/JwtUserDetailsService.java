@@ -1,9 +1,5 @@
 package com.javagang.rdcoursemanagementplatform.security;
 
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import com.javagang.rdcoursemanagementplatform.model.dto.RegisterFormDTO;
 import com.javagang.rdcoursemanagementplatform.model.entity.User;
 import com.javagang.rdcoursemanagementplatform.repository.UserRepository;
@@ -15,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
@@ -24,7 +22,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
-//    TODO must be changed to return UserDTO instead of User
+    //    TODO must be changed to return UserDTO instead of User
     public User save(RegisterFormDTO registerForm) {
         User newUser = new User();
         newUser.setPassword(bcryptEncoder.encode(registerForm.getPassword()));
@@ -38,7 +36,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-        var user = userRepository.findBymail(mail)
+        var user = userRepository.findByMail(mail)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + mail));
 
         return new org.springframework.security.core.userdetails.User(user.getMail(), user.getPassword(),

@@ -1,8 +1,8 @@
 package com.javagang.rdcoursemanagementplatform.model.entity;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,10 +16,10 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "user")
+@NoArgsConstructor
 public class User {
   @Id
   @Type(type = "uuid-char")

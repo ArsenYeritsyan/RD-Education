@@ -25,4 +25,9 @@ public class UserController {
     userService.resetPassword(resetPassword, token);
     return new ResponseEntity<>(HttpStatus.OK);
   }
+
+  @GetMapping("/{email}")
+  public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+    return ResponseEntity.ok(userService.getUserByEmail(email));
+  }
 }

@@ -2,11 +2,12 @@ package com.javagang.rdcoursemanagementplatform.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
-@Data
+@Getter
 @RequiredArgsConstructor
 public class JwtRequest implements Serializable {
 

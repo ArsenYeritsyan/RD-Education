@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 class UserServiceTest {
 
     private UserService userService;
-    private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
+    private UserMapper mapper = Mappers.getMapper(UserMapper.class);
     private  UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenUtil jwtUtil;
@@ -33,7 +33,7 @@ class UserServiceTest {
         passwordEncoder = mock(PasswordEncoder.class);
         jwtUtil = mock(JwtTokenUtil.class);
         javaMailUtil = mock(MailUtility.class);
-        userService = new UserService(userRepository, passwordEncoder, jwtUtil, javaMailUtil);
+        userService = new UserService(mapper,userRepository, passwordEncoder, jwtUtil, javaMailUtil);
     }
 
     @Test
@@ -49,6 +49,7 @@ class UserServiceTest {
     @Test
     void getUserByEmail_NotFound() {
         String email = "davo@gmail.com";
+
         Assertions.assertThrows(UserNotFoundException.class, () -> userService.getUserByEmail(email));
     }
 

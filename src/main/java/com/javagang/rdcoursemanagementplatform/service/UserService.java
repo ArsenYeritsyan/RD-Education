@@ -22,7 +22,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class UserService {
 
-  private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
+  private final UserMapper mapper;
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtTokenUtil jwtUtil;

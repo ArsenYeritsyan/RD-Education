@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 import java.util.Objects;
@@ -26,6 +27,12 @@ public class Course {
 
   @Column(name = "name", nullable = false, unique = true)
   private String name;
+
+  @Column(name = "startDate", nullable = false)
+  private Date startDate;
+
+  @Column(name = "endDate", nullable = false)
+  private Date endDate;
 
   @ManyToOne
   @JoinColumn(name = "faculty_id", nullable = false)
@@ -58,4 +65,5 @@ public class Course {
   public int hashCode() {
     return Objects.hash(id, name, faculty, homeworks, students);
   }
+
 }

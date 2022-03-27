@@ -12,8 +12,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,19 +23,19 @@ import static org.mockito.Mockito.when;
 class UserServiceTest {
 
     private UserService userService;
-    private UserMapper mapper = Mappers.getMapper(UserMapper.class);
-    private  UserRepository userRepository;
+    private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
+    private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenUtil jwtUtil;
     private MailUtility javaMailUtil;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         userRepository = mock(UserRepository.class);
         passwordEncoder = mock(PasswordEncoder.class);
         jwtUtil = mock(JwtTokenUtil.class);
         javaMailUtil = mock(MailUtility.class);
-        userService = new UserService(mapper,userRepository, passwordEncoder, jwtUtil, javaMailUtil);
+        userService = new UserService(mapper, userRepository, passwordEncoder, jwtUtil, javaMailUtil);
     }
 
     @Test
@@ -53,7 +55,7 @@ class UserServiceTest {
         Assertions.assertThrows(UserNotFoundException.class, () -> userService.getUserByEmail(email));
     }
 
-    private User getUser(){
+    private User getUser() {
         var user = new User();
         user.setMail("davo@gmail.com");
         user.setPassword("barev2022");
@@ -64,7 +66,7 @@ class UserServiceTest {
         return user;
     }
 
-    private UserDTO getUserDTO(){
+    private UserDTO getUserDTO() {
         var userDTO = new UserDTO();
         userDTO.setMail("davo@gmail.com");
         userDTO.setPictureId("t85_po21Lk");

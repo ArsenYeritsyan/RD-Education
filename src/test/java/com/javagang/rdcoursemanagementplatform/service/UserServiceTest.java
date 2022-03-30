@@ -10,8 +10,12 @@ import com.javagang.rdcoursemanagementplatform.utility.MailUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
@@ -19,24 +23,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
+@RunWith(SpringRunner.class)
 class UserServiceTest {
 
+    @Autowired
     private UserService userService;
-    private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtTokenUtil jwtUtil;
-    private MailUtility javaMailUtil;
 
-    @BeforeEach
-    void setup() {
-        userRepository = mock(UserRepository.class);
-        passwordEncoder = mock(PasswordEncoder.class);
-        jwtUtil = mock(JwtTokenUtil.class);
-        javaMailUtil = mock(MailUtility.class);
-        userService = new UserService(mapper, userRepository, passwordEncoder, jwtUtil, javaMailUtil);
-    }
+    private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
+
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
+
+    @MockBean
+    private JwtTokenUtil jwtUtil;
+
+    @MockBean
+    private MailUtility javaMailUtil;
 
     @Test
     void getUserByEmail_Ok() {

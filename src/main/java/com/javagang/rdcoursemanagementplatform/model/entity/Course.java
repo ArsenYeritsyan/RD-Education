@@ -1,5 +1,6 @@
 package com.javagang.rdcoursemanagementplatform.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,10 @@ import javax.persistence.*;
 @Table(name = "course")
 public class Course {
   @Id
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
   @Type(type = "uuid-char")
-  @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
-  @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-  @Column(name = "id", columnDefinition = "CHAR(36)")
   private UUID id;
 
   @Column(name = "name", nullable = false, unique = true)
@@ -41,7 +42,8 @@ public class Course {
   @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
   private Set<Homework> homeworks;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @JsonIgnore
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses")
   private Set<Student> students;
 
   public Course(String name, Faculty faculty) {

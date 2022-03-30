@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Type;
 
 import java.util.Set;
 import java.util.UUID;
@@ -21,9 +22,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class User {
   @Id
-  @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
-  @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-  @Column(name = "id", columnDefinition = "CHAR(36)")
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
+  @Type(type = "uuid-char")
   private UUID id;
 
   @Column(name = "mail", unique = true, nullable = false)

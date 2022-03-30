@@ -1,5 +1,6 @@
 package com.javagang.rdcoursemanagementplatform.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,10 @@ import javax.persistence.*;
 @Table(name = "faculty")
 public class Faculty {
   @Id
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
   @Type(type = "uuid-char")
-  @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
-  @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-  @Column(name = "id", columnDefinition = "CHAR(36)")
   private UUID id;
 
   @Column(name = "faculty_name", nullable = false, unique = true)
@@ -31,7 +32,8 @@ public class Faculty {
   @OneToMany(mappedBy = "faculty")
   private Set<Professor> professors = new HashSet<>();
 
-  @OneToMany(mappedBy = "faculty")
+  @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JsonIgnore
   private Set<Course> courses = new HashSet<>();
 
   public Faculty(String facultyName) {
@@ -50,12 +52,11 @@ public class Faculty {
     Faculty faculty = (Faculty) o;
     return Objects.equals(id, faculty.id)
         && facultyName.equals(faculty.facultyName)
-        && Objects.equals(professors, faculty.professors)
-        && Objects.equals(courses, faculty.courses);
+        && Objects.equals(professors, faculty.professors);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, facultyName, professors, courses);
+    return Objects.hash(id, facultyName, professors);
   }
 }

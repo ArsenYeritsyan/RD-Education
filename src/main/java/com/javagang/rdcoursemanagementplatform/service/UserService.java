@@ -2,6 +2,7 @@ package com.javagang.rdcoursemanagementplatform.service;
 
 import com.javagang.rdcoursemanagementplatform.exception.CourseEnrollmentException;
 import com.javagang.rdcoursemanagementplatform.exception.UserNotFoundException;
+import com.javagang.rdcoursemanagementplatform.helper.FeignClientInterceptor;
 import com.javagang.rdcoursemanagementplatform.mapper.UserMapper;
 import com.javagang.rdcoursemanagementplatform.model.dto.ForgotPasswordDTO;
 import com.javagang.rdcoursemanagementplatform.model.dto.ResetPasswordDTO;
@@ -60,39 +61,6 @@ public class UserService {
             .orElseThrow(() -> new UserNotFoundException("User is not found.."));
 
     return mapper.userToUserDTO(user);
-  }
-
-  public User enrollCourse(List<UUID> courseIds) {
-
-    int size = courseIds.size();
-
-    if (size > 6) {
-      throw new CourseEnrollmentException("User can enroll not more than 6 courses");
-    }
-
-    var courses = courseIds
-            .stream()
-            .map(id -> courseRepository.getById(id))
-            .collect(Collectors.toList());
-
-      var filteredCourses = courses
-              .stream()
-              .filter(c -> {
-                for (Course cr : courses) {
-                  if (cr.getStartDate().compareTo(c.getStartDate()) * c.getStartDate().compareTo(cr.getEndDate()) > 0
-                          && cr.getStartDate().compareTo(c.getEndDate()) * c.getEndDate().compareTo(cr.getEndDate()) > 0) {
-                    return false;
-                  }
-                }
-                return c.getFaculty().equals(courses.get(0).getFaculty());
-              }).collect(Collectors.toList());
-
-      if (filteredCourses.size() != size) {
-      throw new CourseEnrollmentException("User can enroll the courses of the same faculty");
-    }
-
-
-
   }
 
 }

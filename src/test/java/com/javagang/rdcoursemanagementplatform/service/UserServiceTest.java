@@ -4,6 +4,7 @@ import com.javagang.rdcoursemanagementplatform.exception.UserNotFoundException;
 import com.javagang.rdcoursemanagementplatform.mapper.UserMapper;
 import com.javagang.rdcoursemanagementplatform.model.dto.UserDTO;
 import com.javagang.rdcoursemanagementplatform.model.entity.User;
+import com.javagang.rdcoursemanagementplatform.repository.CourseRepository;
 import com.javagang.rdcoursemanagementplatform.repository.UserRepository;
 import com.javagang.rdcoursemanagementplatform.security.JwtTokenUtil;
 import com.javagang.rdcoursemanagementplatform.utility.MailUtility;
@@ -23,6 +24,7 @@ class UserServiceTest {
     private UserService userService;
     private UserMapper mapper = Mappers.getMapper(UserMapper.class);
     private  UserRepository userRepository;
+    private CourseRepository courseRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenUtil jwtUtil;
     private MailUtility javaMailUtil;
@@ -30,10 +32,11 @@ class UserServiceTest {
     @BeforeEach
     void setup(){
         userRepository = mock(UserRepository.class);
+        courseRepository = mock(CourseRepository.class);
         passwordEncoder = mock(PasswordEncoder.class);
         jwtUtil = mock(JwtTokenUtil.class);
         javaMailUtil = mock(MailUtility.class);
-        userService = new UserService(mapper,userRepository, passwordEncoder, jwtUtil, javaMailUtil);
+        userService = new UserService(mapper,userRepository,courseRepository, passwordEncoder, jwtUtil, javaMailUtil);
     }
 
     @Test

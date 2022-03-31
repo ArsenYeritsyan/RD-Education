@@ -2,34 +2,32 @@ package com.javagang.rdcoursemanagementplatform.service;
 
 import com.javagang.rdcoursemanagementplatform.exception.UserNotFoundException;
 import com.javagang.rdcoursemanagementplatform.mapper.UserMapper;
+import com.javagang.rdcoursemanagementplatform.mapper.UserMapperImpl;
 import com.javagang.rdcoursemanagementplatform.model.dto.UserDTO;
 import com.javagang.rdcoursemanagementplatform.model.entity.User;
 import com.javagang.rdcoursemanagementplatform.repository.UserRepository;
 import com.javagang.rdcoursemanagementplatform.security.JwtTokenUtil;
 import com.javagang.rdcoursemanagementplatform.utility.MailUtility;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mapstruct.factory.Mappers;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = {UserService.class, UserRepository.class, PasswordEncoder.class, JwtTokenUtil.class, MailUtility.class, UserMapperImpl.class})
 class UserServiceTest {
 
     @Autowired
     private UserService userService;
-
-    private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
 
     @MockBean
     private UserRepository userRepository;
@@ -44,8 +42,8 @@ class UserServiceTest {
     private MailUtility javaMailUtil;
 
     @Test
-    void getUserByEmail_Ok() {
-        String email = "davo@gmail.com";
+    public void getUserByEmail_Ok() {
+        String email = "johnson@gmail.com";
         when(userRepository.findByMail(email)).thenReturn(Optional.of(getUser()));
 
         var result = userService.getUserByEmail(email);
@@ -54,29 +52,29 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserByEmail_NotFound() {
-        String email = "davo@gmail.com";
+    public void getUserByEmail_NotFound() {
+        String email = "johnson@gmail.com";
 
-        Assertions.assertThrows(UserNotFoundException.class, () -> userService.getUserByEmail(email));
+        assertThrows(UserNotFoundException.class, () -> userService.getUserByEmail(email));
     }
 
     private User getUser() {
         var user = new User();
-        user.setMail("davo@gmail.com");
-        user.setPassword("barev2022");
+        user.setMail("johnson@gmail.com");
+        user.setPassword("hello2022");
         user.setPictureId("t85_po21Lk");
-        user.setFirstName("Davit");
-        user.setLastName("Baghoyan");
+        user.setFirstName("John");
+        user.setLastName("Johnson");
 
         return user;
     }
 
     private UserDTO getUserDTO() {
         var userDTO = new UserDTO();
-        userDTO.setMail("davo@gmail.com");
+        userDTO.setMail("johnson@gmail.com");
         userDTO.setPictureId("t85_po21Lk");
-        userDTO.setFirstName("Davit");
-        userDTO.setLastName("Baghoyan");
+        userDTO.setFirstName("John");
+        userDTO.setLastName("Johnson");
 
         return userDTO;
     }

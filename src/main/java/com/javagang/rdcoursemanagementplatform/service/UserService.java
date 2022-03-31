@@ -1,5 +1,6 @@
 package com.javagang.rdcoursemanagementplatform.service;
 
+import com.javagang.rdcoursemanagementplatform.constant.Constants;
 import com.javagang.rdcoursemanagementplatform.exception.UserNotFoundException;
 import com.javagang.rdcoursemanagementplatform.model.dto.ForgotPasswordDTO;
 import com.javagang.rdcoursemanagementplatform.model.dto.ResetPasswordDTO;
@@ -9,6 +10,7 @@ import com.javagang.rdcoursemanagementplatform.security.JwtTokenUtil;
 import com.javagang.rdcoursemanagementplatform.utility.MailUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,4 +45,12 @@ public class UserService {
     user.setPassword(passwordEncoder.encode(resetPassword.getPassword()));
     log.info("Password has been changed successfully");
   }
+
+  public void sendEmailOnRegistrationSuccess (String email) {
+    SimpleMailMessage message = new SimpleMailMessage();
+    message.setTo(email);
+    message.setSubject("Account verification mail");
+    message.setText(
+        "Registration Successful");
+    }
 }

@@ -3,7 +3,6 @@ package com.javagang.rdcoursemanagementplatform.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -22,7 +21,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class User {
   @Id
-  @Type(type = "uuid-char")
   @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
   @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
   @Column(name = "id", columnDefinition = "CHAR(36)")
@@ -36,9 +34,9 @@ public class User {
 
   @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinTable(
-      name = "user_role",
-      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+          name = "user_role",
+          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+          inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   @JsonManagedReference
   private Set<Role> roles = new HashSet<>();
 
@@ -56,12 +54,12 @@ public class User {
   private String pictureId;
 
   public User(
-      String password,
-      String mail,
-      String firstName,
-      String lastName,
-      LocalDate dob,
-      String pictureId) {
+          String password,
+          String mail,
+          String firstName,
+          String lastName,
+          LocalDate dob,
+          String pictureId) {
     this.password = password;
     this.mail = mail;
     this.firstName = firstName;

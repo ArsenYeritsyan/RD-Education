@@ -2,6 +2,7 @@ package com.javagang.rdcoursemanagementplatform.controller;
 
 import com.javagang.rdcoursemanagementplatform.model.dto.ForgotPasswordDTO;
 import com.javagang.rdcoursemanagementplatform.model.dto.ResetPasswordDTO;
+import com.javagang.rdcoursemanagementplatform.model.dto.UserDTO;
 import com.javagang.rdcoursemanagementplatform.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,5 +25,10 @@ public class UserController {
   public ResponseEntity<Void> resetUserPassword(@RequestBody ResetPasswordDTO resetPassword, @PathVariable("token") String token) {
     userService.resetPassword(resetPassword, token);
     return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @GetMapping("/{email}")
+  public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email) {
+    return ResponseEntity.ok(userService.getUserByEmail(email));
   }
 }

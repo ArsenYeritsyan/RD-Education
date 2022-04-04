@@ -30,7 +30,6 @@ public class UserService {
 
   private final UserMapper mapper;
   private final UserRepository userRepository;
-  private final CourseRepository courseRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtTokenUtil jwtUtil;
   private final MailUtility javaMailUtil;

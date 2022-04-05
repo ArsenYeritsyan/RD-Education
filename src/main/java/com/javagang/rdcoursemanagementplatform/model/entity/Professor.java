@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "professor")
 public class Professor extends User {
-  @ManyToOne
+  @ManyToOne(cascade = {CascadeType.MERGE})
   @JoinColumn(name = "faculty_id", referencedColumnName = "id")
   private Faculty faculty;
 

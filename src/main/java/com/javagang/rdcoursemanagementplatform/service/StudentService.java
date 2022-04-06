@@ -37,9 +37,9 @@ public class StudentService {
                 .findByMail(username)
                 .orElseThrow(() -> {throw new UserNotFoundException("User not found.");});
 
-        int size = courseIds.size();
+        int coursesCount = courseIds.size();
 
-        if (size > 6) {
+        if (coursesCount > 6) {
             throw new CourseEnrollmentException("User can enroll not more than 6 courses");
         }
 
@@ -57,7 +57,7 @@ public class StudentService {
                     return c.getFaculty().equals(student.getFaculty());
                 }).collect(Collectors.toList());
 
-        if (filteredCourses.size() != size) {
+        if (filteredCourses.size() != coursesCount) {
             throw new CourseEnrollmentException("User can enroll the courses of the same faculty.");
         }
 

@@ -1,12 +1,9 @@
 package com.javagang.rdcoursemanagementplatform.model.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Type;
 
 import java.util.Set;
 import java.util.UUID;
@@ -16,16 +13,18 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "user")
-@NoArgsConstructor
 public class User {
   @Id
-  @GeneratedValue(generator = "uuid2")
-  @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
   @Type(type = "uuid-char")
+  @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
+  @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+  @Column(name = "id", columnDefinition = "CHAR(36)")
   private UUID id;
 
   @Column(name = "mail", unique = true, nullable = false)
@@ -34,12 +33,11 @@ public class User {
   @Column(name = "password", nullable = false)
   private String password;
 
-  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+  @ManyToMany(cascade = {CascadeType.MERGE},fetch = FetchType.EAGER)
   @JoinTable(
           name = "user_role",
           joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
           inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-  @JsonManagedReference
   private Set<Role> roles = new HashSet<>();
 
   @Column(name = "first_name", nullable = false)
@@ -68,5 +66,12 @@ public class User {
     this.lastName = lastName;
     this.dob = dob;
     this.pictureId = pictureId;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+            "User{id=%s, mail='%s', roles=%s, firstName='%s', lastName='%s', dob=%s, pictureId='%s'}",
+            id, mail, roles, firstName, lastName, dob, pictureId);
   }
 }

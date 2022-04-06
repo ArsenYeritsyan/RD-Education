@@ -34,6 +34,10 @@ public class Student extends User {
   @OneToMany(mappedBy = "student")
   private Set<Homework> homeworks;
 
+  @ManyToOne
+  @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+  private Faculty faculty;
+
   public Student(
       String password,
       String mail,

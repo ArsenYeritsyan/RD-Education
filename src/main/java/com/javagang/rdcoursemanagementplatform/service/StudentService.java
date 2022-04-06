@@ -2,16 +2,14 @@ package com.javagang.rdcoursemanagementplatform.service;
 
 import com.javagang.rdcoursemanagementplatform.exception.CourseEnrollmentException;
 import com.javagang.rdcoursemanagementplatform.exception.UserNotFoundException;
-import com.javagang.rdcoursemanagementplatform.helper.FeignClientInterceptor;
 import com.javagang.rdcoursemanagementplatform.model.entity.Course;
 import com.javagang.rdcoursemanagementplatform.model.entity.Student;
 import com.javagang.rdcoursemanagementplatform.repository.CourseRepository;
-import com.javagang.rdcoursemanagementplatform.repository.FacultyRepository;
 import com.javagang.rdcoursemanagementplatform.repository.StudentRepository;
-import com.javagang.rdcoursemanagementplatform.security.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
@@ -24,10 +22,20 @@ import java.util.stream.Collectors;
 public class StudentService {
 
     private final CourseRepository courseRepository;
-    private final JwtTokenUtil jwtUtil;
     private final StudentRepository studentRepository;
 
+
     public Student enrollCourse(List<UUID> courseIds) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username= "";
+
+        if(authentication != null){
+            username = authentication.getName();
+        }
+
+        Student student = studentRepository
+                .findByMail(username)
+                .orElseThrow(() -> {throw new UserNotFoundException("User not found.");});
 
         int size = courseIds.size();
 
@@ -46,19 +54,12 @@ public class StudentService {
                             throw new CourseEnrollmentException("Selected courses are incompatible.");
                         }
                     }
-                    return c.getFaculty().equals(courses.get(0).getFaculty());
+                    return c.getFaculty().equals(student.getFaculty());
                 }).collect(Collectors.toList());
 
         if (filteredCourses.size() != size) {
             throw new CourseEnrollmentException("User can enroll the courses of the same faculty.");
         }
-
-        String token = FeignClientInterceptor.getBearerTokenHeader();
-        String username = jwtUtil.getUsernameFromToken(token);
-
-        Student student = studentRepository
-                .findByMail(username)
-                .orElseThrow(() -> {throw new UserNotFoundException("User not found.");});
 
         HashSet<Course> cc = new HashSet<>(courses);
         student.getCourses().addAll(cc);

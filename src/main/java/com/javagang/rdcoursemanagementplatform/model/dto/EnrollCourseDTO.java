@@ -7,5 +7,5 @@ import java.util.UUID;
 
 @Data
 public class EnrollCourseDTO {
-   private List<UUID> Ids;
+   private List<UUID> ids;
 }

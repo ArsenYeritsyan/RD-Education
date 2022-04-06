@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -30,10 +31,10 @@ public class Course {
   private String name;
 
   @Column(name = "startDate", nullable = false)
-  private Date startDate;
+  private LocalDateTime startDate;
 
   @Column(name = "endDate", nullable = false)
-  private Date endDate;
+  private LocalDateTime endDate;
 
   @ManyToOne
   @JoinColumn(name = "faculty_id", nullable = false)

@@ -32,6 +32,10 @@ public class Faculty {
   @OneToMany(mappedBy = "faculty")
   private Set<Professor> professors = new HashSet<>();
 
+  @OneToMany(mappedBy = "faculty")
+  @JsonIgnore
+  private Set<Student> students = new HashSet<>();
+
   @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JsonIgnore
   private Set<Course> courses = new HashSet<>();

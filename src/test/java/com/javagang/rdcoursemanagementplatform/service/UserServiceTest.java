@@ -72,6 +72,7 @@ class UserServiceTest {
     private UserDTO getUserDTO() {
         var userDTO = new UserDTO();
         userDTO.setMail("johnson@gmail.com");
+        userDTO.setPassword("hello2022");
         userDTO.setPictureId("t85_po21Lk");
         userDTO.setFirstName("John");
         userDTO.setLastName("Johnson");

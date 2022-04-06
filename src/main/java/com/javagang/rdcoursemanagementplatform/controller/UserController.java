@@ -5,7 +5,6 @@ import com.javagang.rdcoursemanagementplatform.model.dto.ResetPasswordDTO;
 import com.javagang.rdcoursemanagementplatform.model.dto.UserDTO;
 import com.javagang.rdcoursemanagementplatform.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +21,9 @@ public class UserController {
   }
 
   @PutMapping("/reset_password/{token}")
-  public ResponseEntity<Void> resetUserPassword(@RequestBody ResetPasswordDTO resetPassword, @PathVariable("token") String token) {
+  public ResponseEntity.BodyBuilder resetUserPassword(@RequestBody ResetPasswordDTO resetPassword, @PathVariable("token") String token) {
     userService.resetPassword(resetPassword, token);
-    return new ResponseEntity<>(HttpStatus.OK);
+    return ResponseEntity.ok();
   }
 
   @GetMapping("/{email}")

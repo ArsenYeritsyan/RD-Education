@@ -45,6 +45,7 @@ public class UserService {
                         .findByMail(jwtUtil.verifyAndGetMail(token))
                         .orElseThrow(() -> new UserNotFoundException("User is not found.."));
         user.setPassword(passwordEncoder.encode(resetPassword.getPassword()));
+        userRepository.save(user);
         log.info("Password has been changed successfully");
     }
 

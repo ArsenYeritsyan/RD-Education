@@ -3,7 +3,7 @@ package com.javagang.rdcoursemanagementplatform.model.dto.registrationentity;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import com.javagang.rdcoursemanagementplatform.model.entity.Role;
 import com.javagang.rdcoursemanagementplatform.model.entity.User;
 import com.javagang.rdcoursemanagementplatform.constant.Constants;
@@ -15,7 +15,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Component
 public class UserRegistrationEntity implements RegistrationEntity<User> {
-  private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final PasswordEncoder bCryptPasswordEncoder;
 
   @Override
   public RoleType getType() {

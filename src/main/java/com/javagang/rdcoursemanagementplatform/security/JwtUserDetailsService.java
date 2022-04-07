@@ -22,8 +22,8 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder bcryptEncoder;
+    // @Autowired
+    // private PasswordEncoder bcryptEncoder;
 
 
     //    TODO must be changed to return UserDTO instead of User
@@ -31,7 +31,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     private MailUtility mailutility;
     public User save(RegisterFormDTO registerForm) {
         User newUser = new User();
-        newUser.setPassword(bcryptEncoder.encode(registerForm.getPassword()));
+        // newUser.setPassword(bcryptEncoder.encode(registerForm.getPassword()));
         newUser.setDob(registerForm.getDob());
         newUser.setFirstName(registerForm.getFirstName());
         newUser.setLastName(registerForm.getLastName());

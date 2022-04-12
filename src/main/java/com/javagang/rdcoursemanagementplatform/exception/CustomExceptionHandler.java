@@ -20,6 +20,30 @@ public class CustomExceptionHandler {
             new Date(),
             ex.getMessage(),
             request.getDescription(false));
-    return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(FacultyNotFoundException.class)
+  public ResponseEntity<ErrorMessage> facultyExceptionHandler(
+      UserNotFoundException ex, WebRequest request) {
+    ErrorMessage message =
+        new ErrorMessage(
+            HttpStatus.NOT_FOUND.value(),
+            new Date(),
+            ex.getMessage(),
+            request.getDescription(false));
+    return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(CourseNotFoundException.class)
+  public ResponseEntity<ErrorMessage> courseExceptionHandler(
+      UserNotFoundException ex, WebRequest request) {
+    ErrorMessage message =
+        new ErrorMessage(
+            HttpStatus.NOT_FOUND.value(),
+            new Date(),
+            ex.getMessage(),
+            request.getDescription(false));
+    return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
   }
 }

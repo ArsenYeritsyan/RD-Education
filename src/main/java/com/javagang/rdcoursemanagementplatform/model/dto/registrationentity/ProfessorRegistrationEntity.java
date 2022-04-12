@@ -3,12 +3,12 @@ package com.javagang.rdcoursemanagementplatform.model.dto.registrationentity;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import com.javagang.rdcoursemanagementplatform.model.entity.Role;
 import com.javagang.rdcoursemanagementplatform.constant.Constants;
 import com.javagang.rdcoursemanagementplatform.model.enums.RoleType;
 import com.javagang.rdcoursemanagementplatform.model.entity.Faculty;
 import com.javagang.rdcoursemanagementplatform.model.entity.Professor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.javagang.rdcoursemanagementplatform.repository.FacultyRepository;
 import com.javagang.rdcoursemanagementplatform.exception.ResourceNotFoundException;
 import com.javagang.rdcoursemanagementplatform.model.dto.request.SignUpByInvitationDto;
@@ -19,7 +19,7 @@ import java.util.Set;
 @Component
 public class ProfessorRegistrationEntity implements RegistrationEntity<Professor> {
   private final FacultyRepository facultyRepository;
-  private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final PasswordEncoder bCryptPasswordEncoder;
 
   @Override
   public RoleType getType() {

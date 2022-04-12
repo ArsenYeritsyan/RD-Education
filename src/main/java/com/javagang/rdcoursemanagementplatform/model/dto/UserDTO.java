@@ -1,22 +1,41 @@
 package com.javagang.rdcoursemanagementplatform.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.javagang.rdcoursemanagementplatform.model.entity.Role;
+import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
 public class UserDTO {
-    private UUID id;
-    private Set<Role> roles = new HashSet<>();
-    private String mail;
-    private String firstName;
-    private String lastName;
-    private LocalDate dob;
-    private String pictureId;
+  @JsonProperty("id")
+  private UUID id;
+
+  @JsonProperty("mail")
+  private String mail;
+
+  @JsonProperty("password")
+  private String password;
+
+  @JsonProperty("firstName")
+  private String firstName;
+
+  @JsonProperty("lastName")
+  private String lastName;
+
+  @JsonProperty("dob")
+  private LocalDate dob;
+
+  @JsonProperty("pictureId")
+  private String pictureId;
+  
+  @JsonProperty("roles")
+  private Set<Role> roles = new HashSet<>();
 }

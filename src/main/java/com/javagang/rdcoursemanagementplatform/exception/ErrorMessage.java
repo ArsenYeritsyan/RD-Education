@@ -1,10 +1,9 @@
 package com.javagang.rdcoursemanagementplatform.exception;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-
 import java.util.Date;
+
 @Getter
 @AllArgsConstructor
 public class ErrorMessage {

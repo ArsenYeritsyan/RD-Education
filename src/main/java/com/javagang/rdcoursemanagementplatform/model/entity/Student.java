@@ -1,14 +1,13 @@
 package com.javagang.rdcoursemanagementplatform.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Set;
-import java.util.HashSet;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,8 +33,10 @@ public class Student extends User {
   @OneToMany(mappedBy = "student")
   private Set<Homework> homeworks;
 
-  @ManyToOne
-  @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+  @ManyToOne(
+      cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+      optional = false)
+  @JoinColumn(name = "faculty_id", nullable = false, unique = true)
   private Faculty faculty;
 
   public Student(

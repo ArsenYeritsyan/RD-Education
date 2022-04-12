@@ -20,7 +20,7 @@ public class StudentRegistrationEntity implements RegistrationEntity<Student> {
 
   @Override
   public RoleType getType() {
-    return RoleType.ROLE_STUDENT;
+    return RoleType.STUDENT;
   }
 
   @Override

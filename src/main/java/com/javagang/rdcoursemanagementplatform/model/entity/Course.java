@@ -1,5 +1,6 @@
 package com.javagang.rdcoursemanagementplatform.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -36,11 +38,18 @@ public class Course {
   @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
   private Set<Homework> homeworks;
 
+  @JsonIgnore
   @ManyToMany(fetch = FetchType.LAZY)
   private Set<Student> students;
 
   @Column(name = "startTime")
   private Date startTime;
+
+  @Column(name = "startDate", nullable = false)
+  private LocalDateTime startDate;
+
+  @Column(name = "endDate", nullable = false)
+  private LocalDateTime endDate;
 
   @Override
   public boolean equals(Object o) {

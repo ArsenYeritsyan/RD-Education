@@ -1,5 +1,6 @@
 package com.javagang.rdcoursemanagementplatform.security;
 
+import com.javagang.rdcoursemanagementplatform.model.enums.RoleType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.context.annotation.Bean;
@@ -67,7 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .formLogin()
         .disable()
         .authorizeRequests()
-        .antMatchers("/api/v1/authenticate", "/api/v1/register")
+            .antMatchers("/api/v1/students/enroll").hasRole(String.valueOf(RoleType.STUDENT))
+            .antMatchers("/api/v1/authenticate", "/api/v1/register")
         .permitAll()
         .antMatchers(HttpMethod.POST, "/api/v1/auth/**")
         .permitAll()

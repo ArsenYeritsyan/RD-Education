@@ -51,10 +51,10 @@ public class RoleDependantFieldsValidator
     }
 
     var isValueValid = true;
-    if (roleType == RoleType.ROLE_STUDENT) {
+    if (roleType == RoleType.STUDENT) {
       isValueValid = isValidForStudentRoleType(requiredValue.toString());
     }
-    if (roleType == RoleType.ROLE_PROFESSOR) {
+    if (roleType == RoleType.PROFESSOR) {
       isValueValid = isFacultyNameValid(requiredValue.toString());
     }
     return isValueValid;

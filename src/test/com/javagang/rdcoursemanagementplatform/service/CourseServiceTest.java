@@ -14,6 +14,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -83,17 +84,48 @@ class CourseServiceTest {
     courseService.deleteCourseById(course.getId());
     verify(courseRepository, times(1)).deleteById(course.getId());
   }
+  @Test
+  void findAllByFaculty() {
+    var course = initCourse();
+    var course2 = new Course();
+    course2.setFaculty(course.getFaculty());
+    course2.setName("Math Science");
+    var courses = new ArrayList<Course>();
+    courses.add(course);
+    courses.add(course2);
+    when(courseRepository.findByFaculty_Id(course.getFaculty().getId())).thenReturn(courses);
+    var result = courseService.findAllCoursesByFacultyId(course.getFaculty().getId().toString());
+    assertEquals(result.get(1).getName(), "Math Science");
+    verify(courseRepository, times(1)).findByFaculty_Id(course.getFaculty().getId());
+  }
 
   private Faculty createFaculty() {
     return new Faculty("CIBER Business Faculty");
   }
 
   private Course initCourse() {
+    var faculty= createFaculty();
+    faculty.setId(UUID.randomUUID());
     Course course = new Course();
     course.setName("Computer Science 1");
     course.setStartTime(new Date(2022 - 5 - 14));
-    course.setFaculty(createFaculty());
+    course.setFaculty(faculty);
     course.setId(UUID.randomUUID());
     return course;
   }
-}
+  @Test
+  void findAll() {
+    var course = initCourse();
+    var course2 = new Course();
+    course2.setFaculty(course.getFaculty());
+    course2.setName("Math Science");
+    var courses = new ArrayList<Course>();
+    courses.add(course);
+    courses.add(course2);
+    when(courseRepository.findAll()).thenReturn(courses);
+    var result = courseService.findAllCourses();
+    assertEquals(result.get(1).getName(), "Math Science");
+    verify(courseRepository, times(1)).findAll();
+  }
+
+  }

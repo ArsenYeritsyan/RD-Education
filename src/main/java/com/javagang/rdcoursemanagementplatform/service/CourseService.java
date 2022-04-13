@@ -35,14 +35,7 @@ public class CourseService {
         .collect(Collectors.toList());
   }
 
-  public List<CourseDTO> findAllCoursesByFacultyId(String id) {
-    log.info("CourseService::findAllCoursesByFacultyId");
-    return courseRepository.findByFaculty_Id(UUID.fromString(id)).stream()
-            .map(map::courseToCourseDTO)
-            .collect(Collectors.toList());
-  }
-
-  public CourseDTO findCourseById(UUID id) {
+    public CourseDTO findCourseById(UUID id) {
     log.info("CourseService::findCourseById -> id passed = {}", id);
     return courseRepository
         .findById(id)
@@ -65,6 +58,13 @@ public class CourseService {
     }
     courseRepository.deleteById(id);
     return id;
+  }
+
+  public List<CourseDTO> findAllCoursesByFacultyId(String id) {
+    log.info("CourseService::findAllCoursesByFacultyId");
+    return courseRepository.findByFaculty_Id(UUID.fromString(id)).stream()
+            .map(map::courseToCourseDTO)
+            .collect(Collectors.toList());
   }
 
   private CourseDTO saveCourseToDatabase(Course course) {

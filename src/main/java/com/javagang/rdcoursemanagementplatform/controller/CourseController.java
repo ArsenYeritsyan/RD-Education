@@ -17,37 +17,43 @@ import java.util.UUID;
 @RequestMapping("/api/v1/courses")
 @RequiredArgsConstructor
 public class CourseController {
-  private final CourseService courseService;
+    private final CourseService courseService;
 
-  @PostMapping
-  public ResponseEntity<CourseDTO> save(@RequestBody CourseDTO courseDTO) {
-    log.info("CourseController::saveCourse -> courseDTO passed = {}", courseDTO);
-    return ResponseEntity.ok(courseService.saveCourse(courseDTO));
-  }
+    @GetMapping("/{facultyId}")
+    public ResponseEntity<List<CourseDTO>> getAllCoursesByFacultyId(@RequestParam("facultyId") String id) {
+        List<CourseDTO> courseList = courseService.findAllCoursesByFacultyId(id);
+        return ResponseEntity.ok(courseList);
+    }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<CourseDTO> update(
-      @PathVariable("id") UUID id, @RequestBody CourseDTO courseDTO) {
-    log.info(
-        "CourseController::updateCourse -> id passes = {} courseDTO passed = {}", id, courseDTO);
-    return ResponseEntity.ok(courseService.updateCourse(id, courseDTO));
-  }
+    @PostMapping
+    public ResponseEntity<CourseDTO> save(@RequestBody CourseDTO courseDTO) {
+        log.info("CourseController::saveCourse -> courseDTO passed = {}", courseDTO);
+        return ResponseEntity.ok(courseService.saveCourse(courseDTO));
+    }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<CourseDTO> getById(@PathVariable UUID id) {
-    log.info("CourseController::findCourseById -> id passed = {}", id);
-    return ResponseEntity.ok(courseService.findCourseById(id));
-  }
+    @PutMapping("/{id}")
+    public ResponseEntity<CourseDTO> update(
+            @PathVariable("id") UUID id, @RequestBody CourseDTO courseDTO) {
+        log.info(
+                "CourseController::updateCourse -> id passes = {} courseDTO passed = {}", id, courseDTO);
+        return ResponseEntity.ok(courseService.updateCourse(id, courseDTO));
+    }
 
-  @GetMapping
-  public ResponseEntity<List<CourseDTO>> findAllCourses() {
-    log.info("CourseController::findAllCourses");
-    return ResponseEntity.ok(courseService.findAllCourses());
-  }
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseDTO> getById(@PathVariable UUID id) {
+        log.info("CourseController::findCourseById -> id passed = {}", id);
+        return ResponseEntity.ok(courseService.findCourseById(id));
+    }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteCourseById(@PathVariable("id") UUID id) {
-    log.info("CourseController::deleteCourse -> id passed = {}", id);
-    return ResponseEntity.ok(courseService.deleteCourseById(id));
-  }
+    @GetMapping
+    public ResponseEntity<List<CourseDTO>> findAllCourses() {
+        log.info("CourseController::findAllCourses");
+        return ResponseEntity.ok(courseService.findAllCourses());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCourseById(@PathVariable("id") UUID id) {
+        log.info("CourseController::deleteCourse -> id passed = {}", id);
+        return ResponseEntity.ok(courseService.deleteCourseById(id));
+    }
 }

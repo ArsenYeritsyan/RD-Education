@@ -1,28 +1,28 @@
 package com.javagang.rdcoursemanagementplatform.utility;
 
-import freemarker.template.Template;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.mail.MailSendException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import com.javagang.rdcoursemanagementplatform.constant.Constants;
 import com.javagang.rdcoursemanagementplatform.model.dto.InvitationEmailDto;
+import freemarker.template.Template;
+import lombok.RequiredArgsConstructor;
+import org.springframework.mail.MailSendException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import java.util.Map;
-import javax.servlet.ServletContext;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
 public class MailUtility {
 
-  private final JavaMailSenderImpl sender;
+  private final JavaMailSender sender;
   private final ServletContext context;
   private final FreeMarkerConfigurer freemarkerConfig;
 
@@ -35,16 +35,6 @@ public class MailUtility {
     message.setText("To reset your password, click the link	" + link);
     sender.send(message);
   }
-
-  //  public void sendMail(String email, String jwtToken) {
-  //    SimpleMailMessage message = new SimpleMailMessage();
-  //    String link = (context.getContextPath() + Constants.TOKEN_VERIFICATION_LINK + jwtToken);
-  //    message.setTo(email);
-  //    message.setSubject("Account verification mail");
-  //    message.setText(
-  //        "Registration Successful to activate your account click on this link   " + link);
-  //    sender.send(message);
-  //    }
 
   public void sendEmailOnRegistration() throws Exception {
     MimeMessage message = sender.createMimeMessage();

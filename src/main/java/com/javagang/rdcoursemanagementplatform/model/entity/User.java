@@ -35,9 +35,9 @@ public class User {
 
   @ManyToMany(cascade = {CascadeType.MERGE},fetch = FetchType.EAGER)
   @JoinTable(
-      name = "user_role",
-      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+          name = "user_role",
+          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+          inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Set<Role> roles = new HashSet<>();
 
   @Column(name = "first_name", nullable = false)
@@ -54,12 +54,12 @@ public class User {
   private String pictureId;
 
   public User(
-      String password,
-      String mail,
-      String firstName,
-      String lastName,
-      LocalDate dob,
-      String pictureId) {
+          String password,
+          String mail,
+          String firstName,
+          String lastName,
+          LocalDate dob,
+          String pictureId) {
     this.password = password;
     this.mail = mail;
     this.firstName = firstName;
@@ -71,7 +71,7 @@ public class User {
   @Override
   public String toString() {
     return String.format(
-        "User{id=%s, mail='%s', roles=%s, firstName='%s', lastName='%s', dob=%s, pictureId='%s'}",
-        id, mail, roles, firstName, lastName, dob, pictureId);
+            "User{id=%s, mail='%s', roles=%s, firstName='%s', lastName='%s', dob=%s, pictureId='%s'}",
+            id, mail, roles, firstName, lastName, dob, pictureId);
   }
 }

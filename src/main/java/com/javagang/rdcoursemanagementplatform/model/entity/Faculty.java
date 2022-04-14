@@ -1,5 +1,6 @@
 package com.javagang.rdcoursemanagementplatform.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,9 +32,11 @@ public class Faculty {
   @OneToMany(mappedBy = "faculty")
   private Set<Professor> professors = new HashSet<>();
 
+  @JsonIgnore
   @OneToMany(mappedBy = "faculty",fetch = FetchType.LAZY)
   private Set<Course> courses = new HashSet<>();
 
+  @JsonIgnore
   @OneToMany(mappedBy = "faculty")
   private Set<Student> students = new HashSet<>();
 

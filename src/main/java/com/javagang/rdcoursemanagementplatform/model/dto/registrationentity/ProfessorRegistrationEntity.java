@@ -23,7 +23,7 @@ public class ProfessorRegistrationEntity implements RegistrationEntity<Professor
 
   @Override
   public RoleType getType() {
-    return RoleType.ROLE_PROFESSOR;
+    return RoleType.PROFESSOR;
   }
 
   @Override

@@ -19,7 +19,7 @@ public class UserRegistrationEntity implements RegistrationEntity<User> {
 
   @Override
   public RoleType getType() {
-    return RoleType.ROLE_ADMIN;
+    return RoleType.ADMIN;
   }
 
   @Override

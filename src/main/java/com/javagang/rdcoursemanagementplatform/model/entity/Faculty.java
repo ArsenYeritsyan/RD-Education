@@ -2,16 +2,17 @@ package com.javagang.rdcoursemanagementplatform.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.HashSet;
+import java.util.Objects;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -30,10 +31,12 @@ public class Faculty {
   private String facultyName;
 
   @OneToMany(mappedBy = "faculty")
+  @JsonManagedReference
   private Set<Professor> professors = new HashSet<>();
 
   @JsonIgnore
   @OneToMany(mappedBy = "faculty",fetch = FetchType.LAZY)
+  @JsonManagedReference
   private Set<Course> courses = new HashSet<>();
 
   @JsonIgnore

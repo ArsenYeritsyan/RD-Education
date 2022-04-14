@@ -3,7 +3,9 @@ package com.javagang.rdcoursemanagementplatform.model.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import java.util.Set;
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -19,6 +21,10 @@ public class Professor extends User {
 
   @Column(name = "is_verified", columnDefinition = "tinyint(1) default false")
   private boolean isVerified;
+
+  @JsonManagedReference
+  @OneToMany(mappedBy = "professor")
+  private Set<Course> courses;
 
   public Professor(
       String password,

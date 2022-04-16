@@ -19,19 +19,18 @@ public class S3BucketStorageController {
 
   private final S3BucketStorageService service;
 
-  @GetMapping("/list")
+  @GetMapping
   public ResponseEntity<List<String>> getListOfFiles() {
     return new ResponseEntity<>(service.listFiles(), HttpStatus.OK);
   }
 
-  @PostMapping("/file/upload")
-  public ResponseEntity<String> uploadFile(
-      @RequestParam("fileName") String fileName, @RequestParam("file") MultipartFile file) {
-    return ResponseEntity.ok(service.uploadFile(fileName, file));
+  @PostMapping("/upload")
+  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    return ResponseEntity.ok(service.uploadFile(file.getOriginalFilename(), file));
   }
 
-  @GetMapping(value = "/download/{filename}")
-  public ResponseEntity<byte[]> downloadFile(@PathVariable("filename") String filename) {
+  @GetMapping("/download")
+  public ResponseEntity<byte[]> downloadFile(@RequestParam("filename") String filename) {
     ByteArrayOutputStream downloadInputStream = service.downloadFile(filename);
 
     return ResponseEntity.ok()
@@ -40,9 +39,10 @@ public class S3BucketStorageController {
         .body(downloadInputStream.toByteArray());
   }
 
-  @GetMapping(value = "/delete/{filename}")
-  public ResponseEntity<String> deleteFile(@PathVariable("filename") String filename) {
-    return new ResponseEntity<>(service.deleteFile(filename), HttpStatus.OK);
+  @DeleteMapping(value = "/delete")
+  public ResponseEntity<Void> deleteFile(@RequestParam("filename") String filename) {
+    service.deleteFile(filename);
+    return ResponseEntity.accepted().build();
   }
 
   private MediaType contentType(String filename) {

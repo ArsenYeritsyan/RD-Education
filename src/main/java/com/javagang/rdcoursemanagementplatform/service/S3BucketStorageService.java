@@ -47,9 +47,8 @@ public class S3BucketStorageService {
     return "File not uploaded: " + keyName;
   }
 
-  public String deleteFile(final String fileName) {
+  public void deleteFile(String fileName) {
     s3client.deleteObject(defaultBucket, fileName);
-    return "Deleted File: " + fileName;
   }
 
   public ByteArrayOutputStream downloadFile(String keyName) {
@@ -92,31 +91,5 @@ public class S3BucketStorageService {
       objects = s3client.listNextBatchOfObjects(objects);
     }
     return keys;
-  }
-
-  public void createFolder(String folderName) {
-    try {
-      ObjectMetadata metadata = new ObjectMetadata();
-      metadata.setContentLength(0);
-      InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
-      PutObjectRequest putObjectRequest =
-          new PutObjectRequest(defaultBucket, folderName + "/", emptyContent, metadata);
-      s3client.putObject(putObjectRequest);
-    } catch (Exception e) {
-      log.info("Error AmazonS3Service " + e.getMessage());
-    }
-  }
-
-  public void deleteFolder(String folderName) {
-    try {
-      List<S3ObjectSummary> fileList =
-          s3client.listObjects(defaultBucket, folderName).getObjectSummaries();
-      for (S3ObjectSummary file : fileList) {
-        s3client.deleteObject(defaultBucket, file.getKey());
-      }
-      s3client.deleteObject(defaultBucket, folderName);
-    } catch (Exception e) {
-      log.info("Error AmazonS3Service " + e.getMessage());
-    }
   }
 }

@@ -24,7 +24,7 @@ public class MailConfig {
   @Value("${spring.mail.properties.mail.smtp.auth}")
   private String auth;
 
-  @Value("${spring.mail.properties.mail.smtp.port}")
+  @Value("${spring.mail.port}")
   private int port;
 
   @Value("${spring.mail.properties.mail.transport.protocol}")

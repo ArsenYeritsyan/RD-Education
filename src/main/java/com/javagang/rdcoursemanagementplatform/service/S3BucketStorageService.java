@@ -4,13 +4,13 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
+import com.javagang.rdcoursemanagementplatform.exception.AmazonClientServiceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,22 +29,18 @@ public class S3BucketStorageService {
   @Value("${cloud.aws.s3.bucket}")
   private String defaultBucket;
 
-  public String uploadFile(String keyName, MultipartFile file) {
+  public void uploadFile(String keyName, MultipartFile file) {
     try {
       ObjectMetadata metadata = new ObjectMetadata();
       metadata.setContentLength(file.getSize());
       s3client.putObject(defaultBucket, keyName, file.getInputStream(), metadata);
-      return "File uploaded: " + keyName;
     } catch (IOException ioe) {
-      log.error("IOException: " + ioe.getMessage());
+      throw new AmazonClientServiceException("IOException: " + ioe.getMessage());
     } catch (AmazonServiceException serviceException) {
-      log.info("AmazonServiceException: " + serviceException.getMessage());
-      throw serviceException;
+      throw new AmazonClientServiceException("AmazonServiceException: " + serviceException.getMessage());
     } catch (AmazonClientException clientException) {
-      log.info("AmazonClientException Message: " + clientException.getMessage());
-      throw clientException;
+      throw new AmazonClientServiceException("AmazonClientException Message: " + clientException.getMessage());
     }
-    return "File not uploaded: " + keyName;
   }
 
   public void deleteFile(String fileName) {
@@ -62,18 +58,14 @@ public class S3BucketStorageService {
       while ((len = is.read(buffer, 0, buffer.length)) != -1) {
         outputStream.write(buffer, 0, len);
       }
-
       return outputStream;
     } catch (IOException ioException) {
-      log.error("IOException: " + ioException.getMessage());
+      throw new AmazonClientServiceException("IOException: " + ioException.getMessage());
     } catch (AmazonServiceException serviceException) {
-      log.info("AmazonServiceException Message:    " + serviceException.getMessage());
-      throw serviceException;
+      throw new AmazonClientServiceException("AmazonServiceException Message:    " + serviceException.getMessage());
     } catch (AmazonClientException clientException) {
-      log.info("AmazonClientException Message: " + clientException.getMessage());
-      throw clientException;
+      throw new AmazonClientServiceException("AmazonClientException Message: " + clientException.getMessage());
     }
-    return null;
   }
 
   public List<String> listFiles() {

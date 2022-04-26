@@ -25,14 +25,14 @@ public class S3BucketStorageController {
   }
 
   @PostMapping("/upload")
-  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-    return ResponseEntity.ok(service.uploadFile(file.getOriginalFilename(), file));
+  public ResponseEntity<Void> uploadFile(@RequestParam("file") MultipartFile file) {
+    service.uploadFile(file.getOriginalFilename(), file);
+    return ResponseEntity.accepted().build();
   }
 
   @GetMapping("/download")
   public ResponseEntity<byte[]> downloadFile(@RequestParam("filename") String filename) {
     ByteArrayOutputStream downloadInputStream = service.downloadFile(filename);
-
     return ResponseEntity.ok()
         .contentType(contentType(filename))
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")

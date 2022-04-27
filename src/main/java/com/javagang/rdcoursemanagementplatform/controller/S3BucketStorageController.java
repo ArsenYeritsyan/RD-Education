@@ -34,7 +34,7 @@ public class S3BucketStorageController {
   public ResponseEntity<byte[]> downloadFile(@RequestParam("filename") String filename) {
     ByteArrayOutputStream downloadInputStream = service.downloadFile(filename);
     return ResponseEntity.ok()
-        .contentType(contentType(filename))
+        .contentType(getContentType(filename))
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
         .body(downloadInputStream.toByteArray());
   }
@@ -45,7 +45,7 @@ public class S3BucketStorageController {
     return ResponseEntity.accepted().build();
   }
 
-  private MediaType contentType(String filename) {
+  private MediaType getContentType(String filename) {
     String[] fileArrSplit = filename.split("\\.");
     String fileExtension = fileArrSplit[fileArrSplit.length - 1];
     switch (fileExtension) {

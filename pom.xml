@@ -14,6 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>RD-course-management-platform</name>
 	<description>RD-course-management-platform project</description>
+	<packaging>jar</packaging>
 	<properties>
 		<java.version>11</java.version>
         <org.mapstruct.version>1.5.0.RC1</org.mapstruct.version>
@@ -32,6 +33,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.28</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -138,7 +140,20 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.javagang.rdcoursemanagementplatform.RdCourseManagementPlatformApplication</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
-
 </project>

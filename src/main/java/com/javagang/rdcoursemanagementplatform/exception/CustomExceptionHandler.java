@@ -25,7 +25,7 @@ public class CustomExceptionHandler {
 
   @ExceptionHandler(FacultyNotFoundException.class)
   public ResponseEntity<ErrorMessage> facultyExceptionHandler(
-      UserNotFoundException ex, WebRequest request) {
+      FacultyNotFoundException ex, WebRequest request) {
     ErrorMessage message =
         new ErrorMessage(
             HttpStatus.NOT_FOUND.value(),
@@ -37,7 +37,7 @@ public class CustomExceptionHandler {
 
   @ExceptionHandler(CourseNotFoundException.class)
   public ResponseEntity<ErrorMessage> courseExceptionHandler(
-      UserNotFoundException ex, WebRequest request) {
+      CourseNotFoundException ex, WebRequest request) {
     ErrorMessage message =
         new ErrorMessage(
             HttpStatus.NOT_FOUND.value(),
@@ -46,4 +46,17 @@ public class CustomExceptionHandler {
             request.getDescription(false));
     return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
   }
+
+  @ExceptionHandler(AmazonClientServiceException.class)
+  public ResponseEntity<ErrorMessage> amazonExceptionHandler(
+          AmazonClientServiceException ex, WebRequest request) {
+    ErrorMessage message =
+            new ErrorMessage(
+                    HttpStatus.NOT_FOUND.value(),
+                    new Date(),
+                    ex.getMessage(),
+                    request.getDescription(false));
+    return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+  }
+
 }

@@ -21,7 +21,7 @@ public class OpenUiConfig {
                                             .type(SecurityScheme.Type.HTTP)
                                             .scheme("bearer")
                                             .bearerFormat("JWT")))
-            .info(new Info().title("EPAM Educational API").description("EDU services documentation."))
-            .addSecurityItem(new SecurityRequirement().addList("bearer-key"));
+            .info(new Info().title("EPAM Educational API").description("EDU services documentation."));
+            //.addSecurityItem(new SecurityRequirement().addList("bearer-key"));
   }
 }
